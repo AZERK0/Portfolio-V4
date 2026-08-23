@@ -1,0 +1,32 @@
+# dependencies
+**/node_modules/
+.pnpm-store/
+
+# framework and build output
+**/.next/
+**/out/
+**/build/
+**/dist/
+**/coverage/
+
+# Blame runtime artifacts
+.blame/
+
+# runtime environment files (keep templates trackable)
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+
+# debug and generated files
+*.log
+*.tsbuildinfo
+.DS_Store
+.blame-preview/
+node_modules/
+**/.nuxt/
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
