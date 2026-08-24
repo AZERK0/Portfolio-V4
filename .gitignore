@@ -30,3 +30,6 @@ node_modules/
 !.env.example
 !.env.sample
 !.env.template
+
+.vscode
+.idea
