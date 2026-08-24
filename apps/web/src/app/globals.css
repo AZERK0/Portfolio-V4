@@ -2,25 +2,262 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #11110e;
+  --accent: #f15a24;
+  --page-gutter: clamp(1.25rem, 4vw, 4rem);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
 }
 
 body {
+  min-width: 20rem;
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.portfolio-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.hero-matrix {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 8%,
+    rgba(0, 0, 0, 0.12) 17%,
+    #000 34%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 8%,
+    rgba(0, 0, 0, 0.12) 17%,
+    #000 34%
+  );
+}
+
+.hero-portrait {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  width: min(78vw, 82rem);
+  height: min(92svh, 70rem);
+}
+
+.hero-portrait-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+.hero-topline {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(1.5rem, 3vw, 2.75rem) var(--page-gutter) 0;
+}
+
+.hero-role,
+.hero-edition {
+  margin: 0;
+  color: rgba(17, 17, 14, 0.72);
+  font-size: clamp(0.75rem, 0.78vw, 0.875rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.hero-role {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero-role-divider {
+  color: var(--accent);
+}
+
+.hero-edition {
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-title {
+  position: absolute;
+  z-index: 2;
+  top: clamp(8.75rem, 20svh, 14rem);
+  right: var(--page-gutter);
+  left: var(--page-gutter);
+  margin: 0;
+}
+
+.hero-first-name {
+  display: block;
+  margin: 0 0 clamp(0.4rem, 0.8vw, 0.85rem) 0.35rem;
+  color: rgba(17, 17, 14, 0.64);
+  font-size: clamp(1.25rem, 2.1vw, 2.5rem);
+  font-weight: 350;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.hero-last-name {
+  display: block;
+  width: max-content;
+  color: var(--foreground);
+  font-size: clamp(3rem, 12.65vw, 15rem);
+  font-weight: 650;
+  letter-spacing: -0.075em;
+  line-height: 0.8;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero-bottom-blur {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(20rem, 44svh, 36rem);
+  overflow: hidden;
+  pointer-events: none;
+  backdrop-filter: blur(32px);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.08) 18%,
+    rgba(0, 0, 0, 0.28) 38%,
+    rgba(0, 0, 0, 0.58) 60%,
+    rgba(0, 0, 0, 0.86) 80%,
+    #000 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.08) 18%,
+    rgba(0, 0, 0, 0.28) 38%,
+    rgba(0, 0, 0, 0.58) 60%,
+    rgba(0, 0, 0, 0.86) 80%,
+    #000 100%
+  );
+}
+
+.hero-bottom-blur::before {
+  position: absolute;
+  inset: -5rem 0 0;
+  content: "";
+  background-color: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(64px);
+  -webkit-backdrop-filter: blur(64px);
+  will-change: backdrop-filter;
+}
+
+@media (max-width: 42rem) {
+  :root {
+    --page-gutter: 1.25rem;
+  }
+
+  .hero-matrix {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 9%,
+      rgba(0, 0, 0, 0.18) 18%,
+      #000 32%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 9%,
+      rgba(0, 0, 0, 0.18) 18%,
+      #000 32%
+    );
+  }
+
+  .hero-portrait {
+    right: 0;
+    width: 100vw;
+    max-width: none;
+    height: 82svh;
+    transform: none;
+  }
+
+  .hero-portrait-image {
+    object-position: center bottom;
+  }
+
+  .hero-topline {
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: 1.35rem;
+  }
+
+  .hero-role {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.45rem;
+    max-width: 10rem;
+  }
+
+  .hero-title {
+    top: 24svh;
+  }
+
+  .hero-first-name {
+    margin-left: 0.15rem;
+  }
+
+  .hero-last-name {
+    font-size: 12.5vw;
+    letter-spacing: -0.085em;
+  }
+
+  .hero-bottom-blur {
+    height: 40svh;
+  }
+}
+
+@media (max-height: 34rem) and (orientation: landscape) {
+  .hero-portrait {
+    height: 82svh;
+  }
+
+  .hero-title {
+    top: 28svh;
+  }
+
+  .hero-first-name {
+    font-size: 1rem;
+  }
 }
