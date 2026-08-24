@@ -90,13 +90,10 @@ export function PixelMatrix({
     let cells: PixelCell[] = [];
     let animationFrame = 0;
     let isVisible = true;
+    let isPointerInside = false;
     let prefersReducedMotion = reducedMotionQuery.matches;
     let introComplete = prefersReducedMotion;
     const introStartedAt = performance.now();
-
-    if (!introComplete) {
-      canvas.dataset.intro = "true";
-    }
 
     const buildCells = () => {
       const columns = Math.ceil(width / spacing) + 2;
@@ -198,7 +195,7 @@ export function PixelMatrix({
 
       if (!introComplete && introElapsed >= introDuration) {
         introComplete = true;
-        delete canvas.dataset.intro;
+        pointer.targetStrength = isPointerInside ? 1 : 0;
       }
     };
 
@@ -240,12 +237,13 @@ export function PixelMatrix({
     };
 
     const deactivatePointer = () => {
+      isPointerInside = false;
       pointer.targetStrength = 0;
       requestDraw();
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (prefersReducedMotion || !introComplete) {
+      if (prefersReducedMotion) {
         return;
       }
 
@@ -261,6 +259,7 @@ export function PixelMatrix({
         return;
       }
 
+      isPointerInside = true;
       pointer.targetX = event.clientX - bounds.left;
       pointer.targetY = event.clientY - bounds.top;
 
@@ -269,8 +268,10 @@ export function PixelMatrix({
         pointer.y = pointer.targetY;
       }
 
-      pointer.targetStrength = 1;
-      requestDraw();
+      if (introComplete) {
+        pointer.targetStrength = 1;
+        requestDraw();
+      }
     };
 
     const handlePointerOut = (event: PointerEvent) => {
@@ -299,7 +300,11 @@ export function PixelMatrix({
       canvas.height = Math.round(height * pixelRatio);
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-      if (pointer.strength > 0.01 || pointer.targetStrength > 0) {
+      if (
+        isPointerInside ||
+        pointer.strength > 0.01 ||
+        pointer.targetStrength > 0
+      ) {
         pointer.x *= pointerScaleX;
         pointer.y *= pointerScaleY;
         pointer.targetX *= pointerScaleX;
@@ -318,7 +323,6 @@ export function PixelMatrix({
     const handleReducedMotionChange = (event: MediaQueryListEvent) => {
       prefersReducedMotion = event.matches;
       introComplete = true;
-      delete canvas.dataset.intro;
       pointer.strength = 0;
       pointer.targetStrength = 0;
 

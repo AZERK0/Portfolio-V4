@@ -340,8 +340,3 @@ body {
     font-size: clamp(2.1rem, 11svh, 3.75rem);
   }
 }
-
-.hero-matrix[data-intro="true"] {
-  mask-image: none;
-  -webkit-mask-image: none;
-}
