@@ -69,6 +69,10 @@ export function PixelMatrix({
     const baseScale = clamp(minScale, 0.04, 0.9);
     const expandedScale = clamp(maxScale, baseScale, 0.96);
     const fadeDistance = Math.max(0, edgeFade);
+    const introDuration = 1250;
+    const introSweepDuration = 760;
+    const introCellDuration = 400;
+    const introFullScale = 0.92;
     const reducedMotionQuery = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     );
@@ -87,6 +91,12 @@ export function PixelMatrix({
     let animationFrame = 0;
     let isVisible = true;
     let prefersReducedMotion = reducedMotionQuery.matches;
+    let introComplete = prefersReducedMotion;
+    const introStartedAt = performance.now();
+
+    if (!introComplete) {
+      canvas.dataset.intro = "true";
+    }
 
     const buildCells = () => {
       const columns = Math.ceil(width / spacing) + 2;
@@ -126,10 +136,11 @@ export function PixelMatrix({
       context.fill();
     };
 
-    const draw = () => {
+    const draw = (timestamp = performance.now()) => {
       context.clearRect(0, 0, width, height);
       context.fillStyle = color;
       const responsiveRadius = Math.min(radius, Math.max(170, width * 0.25));
+      const introElapsed = timestamp - introStartedAt;
 
       for (const cell of cells) {
         const distanceFromPointer = Math.hypot(
@@ -142,7 +153,8 @@ export function PixelMatrix({
           1,
         );
         const influence = smoothstep(proximity) * pointer.strength;
-        const scale = baseScale + (expandedScale - baseScale) * influence;
+        const interactiveScale =
+          baseScale + (expandedScale - baseScale) * influence;
         const distanceFromEdge = Math.min(
           cell.x,
           width - cell.x,
@@ -157,12 +169,40 @@ export function PixelMatrix({
             : 0.32 +
               smoothstep(clamp(irregularEdgeDistance / fadeDistance, 0, 1)) *
                 0.68;
+        const interactiveAlpha = cell.opacity * edgeOpacity;
 
-        drawCell(cell, scale, cell.opacity * edgeOpacity);
+        if (introComplete) {
+          drawCell(cell, interactiveScale, interactiveAlpha);
+          continue;
+        }
+
+        const rowProgress = clamp(
+          (cell.y + spacing) / (height + spacing * 2),
+          0,
+          1,
+        );
+        const cellDelay =
+          rowProgress * introSweepDuration + cell.edgeNoise * 60;
+        const collapseProgress = clamp(
+          (introElapsed - cellDelay) / introCellDuration,
+          0,
+          1,
+        );
+        const collapseEase = 1 - Math.pow(1 - collapseProgress, 3);
+        const introScale =
+          introFullScale + (interactiveScale - introFullScale) * collapseEase;
+        const introAlpha = 0.96 + (interactiveAlpha - 0.96) * collapseEase;
+
+        drawCell(cell, introScale, introAlpha);
+      }
+
+      if (!introComplete && introElapsed >= introDuration) {
+        introComplete = true;
+        delete canvas.dataset.intro;
       }
     };
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
       animationFrame = 0;
 
       if (!isVisible || prefersReducedMotion) {
@@ -177,7 +217,7 @@ export function PixelMatrix({
       pointer.y += (pointer.targetY - pointer.y) * positionEase;
       pointer.strength +=
         (pointer.targetStrength - pointer.strength) * strengthEase;
-      draw();
+      draw(timestamp);
 
       const positionDelta =
         Math.abs(pointer.targetX - pointer.x) +
@@ -185,6 +225,7 @@ export function PixelMatrix({
       const strengthDelta = Math.abs(pointer.targetStrength - pointer.strength);
 
       if (
+        !introComplete ||
         strengthDelta > 0.006 ||
         (pointer.targetStrength > 0 && positionDelta > 0.15)
       ) {
@@ -204,7 +245,7 @@ export function PixelMatrix({
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || !introComplete) {
         return;
       }
 
@@ -276,6 +317,8 @@ export function PixelMatrix({
 
     const handleReducedMotionChange = (event: MediaQueryListEvent) => {
       prefersReducedMotion = event.matches;
+      introComplete = true;
+      delete canvas.dataset.intro;
       pointer.strength = 0;
       pointer.targetStrength = 0;
 
@@ -313,6 +356,7 @@ export function PixelMatrix({
     window.addEventListener("blur", deactivatePointer);
     reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
     resize();
+    requestDraw();
 
     return () => {
       resizeObserver.disconnect();
