@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <defs><linearGradient id="wall" x2="1" y2=".6"><stop stop-color="#c5c8c2"/><stop offset="1" stop-color="#f5f3e9"/></linearGradient><linearGradient id="shadow"><stop stop-color="#393f45"/><stop offset="1" stop-color="#93968e"/></linearGradient></defs>
+  <rect width="1280" height="800" fill="#eeeae1"/>
+  <rect width="1280" height="106" fill="#344ec5"/>
+  <text x="50" y="68" fill="#f1efe6" font-family="Arial,sans-serif" font-size="47" font-weight="700" letter-spacing="-4">forme®</text>
+  <g fill="#f1efe6" font-family="Arial,sans-serif" font-size="13"><text x="776" y="61">Projets</text><text x="899" y="61">Le studio</text><text x="1071" y="61">Parlons ensemble ↗</text></g>
+  <text x="49" y="166" fill="#344ec5" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">STUDIO D'ARCHITECTURE INDÉPENDANT</text>
+  <g fill="#344ec5" font-family="Arial,sans-serif" font-size="110" letter-spacing="-8"><text x="44" y="285">Habiter</text><text x="44" y="393">autrement.</text></g>
+  <g fill="#65685d" font-family="Arial,sans-serif" font-size="15"><text x="52" y="463">Nous dessinons des espaces qui font du bien.</text><text x="52" y="488">À celles et ceux qui les vivent. À ce qui les entoure.</text></g>
+  <path d="M53 542H258" stroke="#344ec5"/><text x="54" y="529" fill="#344ec5" font-family="Arial,sans-serif" font-size="13">Découvrir le studio</text><path d="M242 519h13v13m0-13l-13 13" stroke="#344ec5" fill="none"/>
+  <svg x="643" y="145" width="586" height="562" viewBox="0 0 586 562">
+    <rect width="586" height="562" fill="#c4c7c1"/>
+    <path d="M0 0H395V562H0Z" fill="url(#wall)"/>
+    <path d="M95 562V215a128 128 0 0 1 256 0v347Z" fill="url(#shadow)"/>
+    <path d="M136 562V226a90 90 0 0 1 180 0v336Z" fill="#363e40"/>
+    <path d="M179 562V268a66 66 0 0 1 132 0v294Z" fill="#8f9b8d"/>
+    <path d="M209 562V278a50 50 0 0 1 100 0v284Z" fill="#d3d7c7"/>
+    <path d="M-10 562L211 372H308L551 562Z" fill="#afaf9d"/>
+    <path d="M-10 562L211 372H259L281 562Z" fill="#d9d6c7"/>
+    <path d="M395 0H586V562H395Z" fill="#e5e3d8"/>
+    <path d="M395 0L586 129V239L395 106Z" fill="#b6b9b0"/>
+    <rect x="22" y="509" width="171" height="30" fill="#eeeae1"/><text x="34" y="529" font-family="Arial,sans-serif" font-size="10" fill="#344ec5">01 / MAISON DES PASSAGES</text>
+  </svg>
+  <text x="51" y="685" fill="#344ec5" font-family="Arial,sans-serif" font-size="76">↘</text>
+  <path d="M50 741H1230" stroke="#b7b9ae"/><g fill="#64695d" font-family="Arial,sans-serif" font-size="11"><text x="51" y="774">ESPACES SENSIBLES, ARCHITECTURE DURABLE.</text><text x="1139" y="774">PARIS, FRANCE</text></g>
+</svg>

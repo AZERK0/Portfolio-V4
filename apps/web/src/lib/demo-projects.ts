@@ -1,0 +1,77 @@
+import type { Project } from "./projects";
+
+// Presentation-only examples: never seeded into the production database.
+export const demoProjects: Project[] = [
+  {
+    id: "demo-atlas",
+    slug: "atlas",
+    title: "Atlas",
+    summary: "Partir moins loin. Vivre plus grand.",
+    description:
+      "Une plateforme de séjours au grand air, de la recherche d’un refuge à la réservation. Un concept pensé pour rendre l’évasion aussi simple que l’envie de partir.",
+    category: "Plateforme de réservation",
+    role: "Conception & développement full stack",
+    year: 2026,
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Stripe"],
+    imageUrl: "/projects/atlas.svg",
+    imageAlt:
+      "Concept Atlas : plateforme de séjours nature, dans des tons olive et crème.",
+    accentColor: "#65704b",
+    liveUrl: null,
+    sourceUrl: null,
+  },
+  {
+    id: "demo-forme",
+    slug: "forme",
+    title: "Forme",
+    summary: "Un nouvel espace pour les idées.",
+    description:
+      "Un portfolio éditorial pour un studio d’architecture indépendant. Une direction artistique affirmée, des projets immersifs et un contenu administrable en toute autonomie.",
+    category: "Site vitrine & CMS",
+    role: "Direction technique & développement",
+    year: 2026,
+    technologies: ["Next.js", "Sanity", "Three.js"],
+    imageUrl: "/projects/forme.svg",
+    imageAlt:
+      "Concept Forme : portfolio d’architecture bleu cobalt et composition géométrique.",
+    accentColor: "#344ec5",
+    liveUrl: null,
+    sourceUrl: null,
+  },
+  {
+    id: "demo-circuit",
+    slug: "circuit",
+    title: "Circuit",
+    summary: "Moins de friction. Plus de création.",
+    description:
+      "Un espace de travail pour les équipes produit : organiser les cycles, suivre les livraisons et garder une vision claire. Un concept d’application SaaS, de l’interface à l’API.",
+    category: "Application SaaS",
+    role: "Design d’interface & développement full stack",
+    year: 2025,
+    technologies: ["React", "Node.js", "PostgreSQL", "WebSocket"],
+    imageUrl: "/projects/circuit.svg",
+    imageAlt:
+      "Concept Circuit : application de gestion de projets sombre, avec un tableau de tâches.",
+    accentColor: "#dc713f",
+    liveUrl: null,
+    sourceUrl: null,
+  },
+  {
+    id: "demo-argile",
+    slug: "argile",
+    title: "Argile",
+    summary: "Des objets qui prennent le temps.",
+    description:
+      "Une boutique en ligne dédiée à la céramique artisanale. Catalogue, panier et parcours de commande réunis dans une expérience chaleureuse qui laisse toute la place aux objets.",
+    category: "E-commerce",
+    role: "Conception & développement full stack",
+    year: 2025,
+    technologies: ["Next.js", "Shopify", "TypeScript"],
+    imageUrl: "/projects/argile.svg",
+    imageAlt:
+      "Concept Argile : boutique de céramiques aux teintes terracotta et sable.",
+    accentColor: "#ad624d",
+    liveUrl: null,
+    sourceUrl: null,
+  },
+];

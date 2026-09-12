@@ -1,8 +1,38 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  slug         String        @unique @db.VarChar(100)
+  title        String        @db.VarChar(120)
+  summary      String        @db.VarChar(320)
+  description  String        @db.Text
+  category     String        @db.VarChar(80)
+  role         String        @db.VarChar(120)
+  year         Int
+  technologies String[]      @default([])
+  imageUrl     String?       @db.VarChar(2048)
+  imageAlt     String?       @db.VarChar(240)
+  accentColor  String        @default("#f15a24") @db.VarChar(7)
+  liveUrl      String?       @db.VarChar(2048)
+  sourceUrl    String?       @db.VarChar(2048)
+  status       ProjectStatus @default(DRAFT)
+  sortOrder    Int           @default(0)
+  publishedAt  DateTime?     @db.Timestamptz(3)
+  createdAt    DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime      @updatedAt @db.Timestamptz(3)
+
+  @@index([status, sortOrder, createdAt, id])
 }
